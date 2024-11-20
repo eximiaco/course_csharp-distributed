@@ -21,5 +21,5 @@ Com essa plataforma, a EventHub busca criar uma solução confiável, escalável
 Você deverá entregar os seguintes artefatos para o sistema **EventHub**:
 - **Identificação de contextos**: Analise e identifique os diferentes contextos necessários para o sistema funcionar.
 - **Escolha de padrões de comunicação**: Decida entre comunicação síncrona ou assíncrona para interações entre os contextos.
-- **Defina a arquiteura de dados* das informações e seus golden sources.
+- **Defina a arquiteura de dados** das informações e seus golden sources.
 - **Implemente um projeto referência** para exemplificar a comunicação entre os contextos (Não precisa de regras de negócio ou persistência)
