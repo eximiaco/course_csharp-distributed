@@ -1,5 +1,7 @@
 using Flurl.Http;
 using m1w2s3.httpClient.flurl;
+using m1w2s3.httpClient.flurl.Recebimentos;
+using m1w2s3.httpClient.flurl.Recebimentos.Apis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<OrdersApi>();
+builder.Services.AddScoped<ITransacaoApi, EbanxApi>();
+builder.Services.AddScoped<RecebimentoApi>();
 
 var app = builder.Build();
 
