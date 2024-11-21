@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35431.28
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "m1w2s3.httpClient.flurl", "m1w2s3.httpClient.flurl\m1w2s3.httpClient.flurl.csproj", "{EFD6B8E3-0EED-4E55-9273-6140AFA046AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Flurl.Tests", "Client.Flurl.Tests\Client.Flurl.Tests.csproj", "{68DA8C65-9B01-48BF-B680-9651E9B74309}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EFD6B8E3-0EED-4E55-9273-6140AFA046AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFD6B8E3-0EED-4E55-9273-6140AFA046AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFD6B8E3-0EED-4E55-9273-6140AFA046AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFD6B8E3-0EED-4E55-9273-6140AFA046AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68DA8C65-9B01-48BF-B680-9651E9B74309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68DA8C65-9B01-48BF-B680-9651E9B74309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68DA8C65-9B01-48BF-B680-9651E9B74309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68DA8C65-9B01-48BF-B680-9651E9B74309}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1D9BD118-C1FE-498D-8473-25A861C2613E}
+	EndGlobalSection
+EndGlobal

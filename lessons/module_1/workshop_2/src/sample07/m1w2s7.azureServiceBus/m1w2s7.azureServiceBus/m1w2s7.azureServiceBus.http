@@ -1,0 +1,6 @@
+@m1w2s7.azureServiceBus_HostAddress = http://localhost:5199
+
+GET {{m1w2s7.azureServiceBus_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
