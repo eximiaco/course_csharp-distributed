@@ -11,17 +11,26 @@ public class OrdersApi(HttpClient httpClient)
     {
 		try
 		{
-            var response = await httpClient.GetAsync(_url, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+            var response = await httpClient
+                .GetAsync(_url, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
+                .ConfigureAwait(false);
             if (!response.IsSuccessStatusCode)
             {
-                var error = await response.Content.ReadFromJsonAsync<OrderErrorDto>(cancellationToken).ConfigureAwait(false);
+                var error = await response
+                    .Content.ReadFromJsonAsync<OrderErrorDto>(cancellationToken)
+                    .ConfigureAwait(false);
                 return Result.Failure<IEnumerable<OrderDto>>(error!.Error);
             }
 
-            var orders = await response.Content.ReadFromJsonAsync<IEnumerable<OrderDto>>(cancellationToken).ConfigureAwait(false);
+            var orders = await response
+                .Content
+                .ReadFromJsonAsync<IEnumerable<OrderDto>>(cancellationToken)
+                .ConfigureAwait(false);
             return Result.Success(orders!);
         }
-		catch (JsonException ex) // Se o response que está sendo desserializado não condizer com o tipo informado, uma exception desse tipo será lançada
+        // Se o response que está sendo desserializado não condizer com o tipo informado,
+        // uma exception desse tipo será lançada
+        catch (JsonException ex)
 		{
             return Result.Failure<IEnumerable<OrderDto>>("Falha recuperando os pedidos.");
         }
