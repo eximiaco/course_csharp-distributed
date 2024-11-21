@@ -1,4 +1,4 @@
-﻿namespace m1w2s3.httpClient.flurl.Transacoes;
+﻿namespace m1w2s3.httpClient.flurl.Recebimentos;
 
 public sealed class Payer
 {
