@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "m1w2s10.contextA", "m1w2s10.contextA\m1w2s10.contextA.csproj", "{381F9653-191C-4AAB-96C0-D13CA4049B4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "m1w2s10.contextB", "m1w2s10.contextB\m1w2s10.contextB.csproj", "{77CF606F-826A-4577-964D-7C82DCC08458}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{381F9653-191C-4AAB-96C0-D13CA4049B4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{381F9653-191C-4AAB-96C0-D13CA4049B4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{381F9653-191C-4AAB-96C0-D13CA4049B4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{381F9653-191C-4AAB-96C0-D13CA4049B4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77CF606F-826A-4577-964D-7C82DCC08458}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77CF606F-826A-4577-964D-7C82DCC08458}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77CF606F-826A-4577-964D-7C82DCC08458}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77CF606F-826A-4577-964D-7C82DCC08458}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
