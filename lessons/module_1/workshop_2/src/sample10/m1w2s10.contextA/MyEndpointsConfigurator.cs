@@ -23,8 +23,6 @@ public class MyEndpointsConfigurator(IConfiguration configuration) : IEndpointsC
                             {
                                 config.SecurityProtocol = securityProtocol;
                             }
-
-                            config.SecurityProtocol = securityProtocol;
                         }
 
                         if (!string.IsNullOrEmpty(configSettings["SaslMechanism"]))

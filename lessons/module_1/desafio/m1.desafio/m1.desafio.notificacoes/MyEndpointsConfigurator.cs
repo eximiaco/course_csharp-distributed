@@ -1,7 +1,8 @@
-using Confluent.Kafka;
+﻿using Confluent.Kafka;
+using m1.desafio.notificacoes.Consumers;
 using Silverback.Messaging.Configuration;
 
-namespace m1w2s10.contextB;
+namespace m1.desafio.notificacoes;
 
 public class MyEndpointsConfigurator(IConfiguration configuration) : IEndpointsConfigurator
 {
@@ -14,15 +15,12 @@ public class MyEndpointsConfigurator(IConfiguration configuration) : IEndpointsC
                 endpoints
                     .Configure(config =>
                     {
-                        config.BootstrapServers = configSettings["BootstrapServers"];
-                        config.ClientId = configSettings["ClientId"];
+                        config.BootstrapServers = configSettings["BootstrapServers"]!;
+                        config.ClientId = configSettings["ClientId"]!;
                         if (!string.IsNullOrEmpty(configSettings["SecurityProtocol"]))
                         {
-                            if (Enum.TryParse<SecurityProtocol>(configSettings["SecurityProtocol"],
-                                    out var securityProtocol))
-                            {
+                            if (Enum.TryParse<SecurityProtocol>(configSettings["SecurityProtocol"], out var securityProtocol))
                                 config.SecurityProtocol = securityProtocol;
-                            }
                         }
 
                         if (!string.IsNullOrEmpty(configSettings["SaslMechanism"]))
@@ -30,24 +28,24 @@ public class MyEndpointsConfigurator(IConfiguration configuration) : IEndpointsC
                             if (Enum.TryParse<SaslMechanism>(configSettings["SaslMechanism"], out var saslMechanism))
                             {
                                 config.SaslMechanism = saslMechanism;
-                                config.SaslUsername = configSettings["SaslUsername"];
-                                config.SaslPassword = configSettings["SaslPassword"];
+                                config.SaslUsername = configSettings["SaslUsername"]!;
+                                config.SaslPassword = configSettings["SaslPassword"]!;
                             }
 
                             config.SaslMechanism = saslMechanism;
                         }
                     });
-                
+
                 endpoints.AddInbound(endpoint =>
-                    endpoint
-                        .ConsumeFrom("created-order-event")
-                        .Configure(config =>
-                        {
-                            config.GroupId = "context-B-group";
-                            config.AutoOffsetReset = AutoOffsetReset.Earliest;
-                        })
-                        .OnError(policy=> policy.Skip())
-                        .DeserializeJson(serializer => serializer.UseFixedType<OrderCreatedEvent>()));
+                   endpoint
+                       .ConsumeFrom("pagamento-realizado-event")
+                       .Configure(config =>
+                       {
+                           config.GroupId = "notificacoes-group";
+                           config.AutoOffsetReset = AutoOffsetReset.Earliest;
+                       })
+                       .OnError(policy => policy.Skip())
+                       .DeserializeJson(serializer => serializer.UseFixedType<PagamentoRealizadoEvent>()));
             });
     }
 }
