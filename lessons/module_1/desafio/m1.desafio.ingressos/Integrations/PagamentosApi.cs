@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using Flurl.Http;
 using Polly;
+using System.Text.Json;
 
 namespace m1.desafio.ingressos.Integrations;
 

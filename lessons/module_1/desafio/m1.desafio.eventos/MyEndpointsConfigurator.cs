@@ -21,7 +21,7 @@ public class MyEndpointsConfigurator(IConfiguration configuration) : IEndpointsC
                         {
                             if (Enum.TryParse<SecurityProtocol>(configSettings["SecurityProtocol"], out var securityProtocol))
                                 config.SecurityProtocol = securityProtocol;
-                    }
+                        }
 
                         if (!string.IsNullOrEmpty(configSettings["SaslMechanism"]))
                         {
