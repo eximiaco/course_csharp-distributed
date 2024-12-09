@@ -13,6 +13,8 @@ try
 {
     Log.ForContext("ApplicationName", serviceName).Information("Starting application");
     builder.Services
+        .AddTelemetry(serviceName!, serviceVersion!, builder.Configuration)
+        .AddLogs(builder.Configuration, serviceName!)
         .AddHttpContextAccessor()
         .AddEndpointsApiExplorer()
         .AddSwaggerDoc()
