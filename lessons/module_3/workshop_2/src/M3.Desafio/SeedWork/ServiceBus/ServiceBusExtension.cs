@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace M3.Desafio.SeedWork;
+namespace M3.Desafio.SeedWork.ServiceBus;
 
 public static class ServiceBusExtension
 {
@@ -18,6 +18,6 @@ public static class ServiceBusExtension
             .ForEach(entity => entity.Entity.ClearDomainEvents());
 
         foreach (var domainEvent in domainEvents)
-            await serviceBus.PublishAsync(domainEvent, cancellationToken).ConfigureAwait(false);
+            await serviceBus.PublishAsync(domainEvent).ConfigureAwait(false);
     }
 }

@@ -1,18 +1,19 @@
 ﻿using Asp.Versioning;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
-using Serilog.Filters;
 using Serilog;
 using System.Reflection;
 using Serilog.Sinks.OpenTelemetry;
-using static CSharpFunctionalExtensions.Result;
 using Serilog.Enrichers.OpenTelemetry;
 using M3.Desafio.SeedWork.Telemetry;
-using M3.Desafio.Inscricoes.Telemetry;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
+using M3.Desafio.Inscricoes.Eventos;
+using M3.Desafio.SeedWork.ServiceBus.Silverback;
+using Silverback.Messaging.Configuration;
+using M3.Desafio.Inscricoes.Telemetria;
 
 namespace M3.Desafio.Inscricoes.API.Infrastructure;
 
@@ -95,11 +96,6 @@ internal static class ServicesExtensions
     {
         var hcBuilder = services.AddHealthChecks();
         hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy(), new string[] { "ready" });
-        // hcBuilder
-        //     .AddNpgSql(
-        //         configuration.GetConnectionString(Ambient.DatabaseConnectionName)!,
-        //         name: "integration-store-check",
-        //         tags: new string[] {"IntegrationStoreCheck", "health"});
         return services;
     }
 
@@ -127,13 +123,31 @@ internal static class ServicesExtensions
 
     public static IServiceCollection AddCustomMvc(this IServiceCollection services)
     {
-        var assembly = Assembly.Load(typeof(Inscricao).Assembly.ToString());
         services
             .AddControllers(o =>
             {
                 o.Filters.Add(typeof(HttpGlobalExceptionFilter));
-            })
-            .AddApplicationPart(assembly);
+            });
+        return services;
+    }
+
+    public static IServiceCollection AddMessageBroker(this IServiceCollection services, IConfiguration configuration)
+    {
+        IConfigurationSection kafkaSection = configuration.GetSection("Kafka");
+        var kafkaConfig = new KafkaConfig();
+        kafkaConfig.Connection = kafkaSection.GetSection("Connection").Get<KafkaConnectionConfig>()!;
+        services.AddSingleton(kafkaConfig);
+
+        services
+            .AddSilverback()
+            .WithConnectionToMessageBroker(config => config.AddKafka())
+            .AddKafkaEndpoints(endpoints => endpoints
+                .Configure(config => config.Configure(kafkaConfig))
+                .AddOutbound<InscricaoRealizadaEvento>(endpoint => endpoint
+                    .ProduceTo("inscricoes")
+                    .WithKafkaKey<InscricaoRealizadaEvento>(envelope => envelope.Message!.Id)
+                    .SerializeAsJson(serializer => serializer.UseFixedType<InscricaoRealizadaEvento>())
+                    .DisableMessageValidation()));
         return services;
     }
 
@@ -150,8 +164,9 @@ internal static class ServicesExtensions
 
         serviceCollection.AddSingleton(settings);
         serviceCollection.AddScoped(sp => new OtelTracingService(sp.GetService<TelemetrySettings>()));
+        serviceCollection.AddScoped<TelemetryFactory>();
         serviceCollection.AddSingleton(metrics);
-        serviceCollection.AddSingleton<InscricoesOtelVariables>();
+        serviceCollection.AddSingleton<OtelVariables>();
 
         Action<ResourceBuilder> configureResource = r => r.AddService(
             serviceName: settings.ServiceName,
@@ -182,7 +197,7 @@ internal static class ServicesExtensions
                     .AddOtlpExporter(config =>
                     {
                         config.Endpoint = new Uri(settings.Exporter.Endpoint);
-                        //config.Endpoint = new Uri("http://3.82.16.160:4317");
+                        //config.Endpoint = new Uri("http://ec2-52-54-217-123.compute-1.amazonaws.com:4317");
                         config.Protocol = OtlpExportProtocol.Grpc;
                     });
             })
@@ -195,8 +210,7 @@ internal static class ServicesExtensions
                     .AddAspNetCoreInstrumentation()
                     .AddOtlpExporter(config =>
                     {
-                        config.Endpoint = new Uri(settings.Exporter.Endpoint ?? string.Empty);
-                        //config.Endpoint = new Uri("http://3.82.16.160:4317");
+                        config.Endpoint = new Uri(settings.Exporter.Endpoint);
                         config.Protocol = OtlpExportProtocol.Grpc;
                     });
             });

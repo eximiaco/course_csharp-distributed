@@ -12,10 +12,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Inscricoes\Infrastructure\" />
+    <PackageReference Include="Silverback.Core" Version="4.5.1" />
+    <PackageReference Include="Silverback.Integration.Kafka" Version="4.5.1" />
+    <PackageReference Include="SmartFormat.NET" Version="3.5.1" />
   </ItemGroup>
 
 </Project>

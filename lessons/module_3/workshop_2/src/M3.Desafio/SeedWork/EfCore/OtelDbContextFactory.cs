@@ -1,4 +1,4 @@
-﻿using M3.Desafio.SeedWork;
+﻿using M3.Desafio.SeedWork.ServiceBus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
