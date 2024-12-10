@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35431.28
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M3.Desafio.Inscricoes.API", "M3.Desafio.Inscricoes.API\M3.Desafio.Inscricoes.API.csproj", "{1EEB1A28-032B-4729-A9E3-293688209986}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M3.Desafio", "M3.Desafio\M3.Desafio.csproj", "{AC1F611F-0903-4717-A244-BB7526F86F84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M3.Desafio", "M3.Desafio\M3.Desafio.csproj", "{AC1F611F-0903-4717-A244-BB7526F86F84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1EEB1A28-032B-4729-A9E3-293688209986}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1EEB1A28-032B-4729-A9E3-293688209986}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1EEB1A28-032B-4729-A9E3-293688209986}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1EEB1A28-032B-4729-A9E3-293688209986}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AC1F611F-0903-4717-A244-BB7526F86F84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AC1F611F-0903-4717-A244-BB7526F86F84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC1F611F-0903-4717-A244-BB7526F86F84}.Release|Any CPU.ActiveCfg = Release|Any CPU
