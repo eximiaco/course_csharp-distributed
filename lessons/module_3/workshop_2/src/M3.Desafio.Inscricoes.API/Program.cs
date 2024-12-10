@@ -16,7 +16,6 @@ try
         .AddTelemetry(serviceName!, serviceVersion!, builder.Configuration)
         .AddLogs(builder.Configuration, serviceName!)
         .AddHttpContextAccessor()
-        .AddEndpointsApiExplorer()
         .AddSwaggerDoc()
         .AddVersioning()
         .AddCustomCors()
@@ -38,9 +37,14 @@ try
     if (!app.Environment.IsProduction())
     {
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(options =>
+        {
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+            options.SwaggerEndpoint("/swagger/v2/swagger.json", "API v2");
+        });
     }
 
+    app.UseHttpsRedirection();
     app.UseAuthentication();
     app.UseAuthorization();
     app.UseMiddleware<UnitOfWorkMiddleware>();

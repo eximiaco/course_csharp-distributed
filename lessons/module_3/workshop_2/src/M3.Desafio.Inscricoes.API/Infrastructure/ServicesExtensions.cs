@@ -14,6 +14,9 @@ using M3.Desafio.Inscricoes.Eventos;
 using M3.Desafio.SeedWork.ServiceBus.Silverback;
 using Silverback.Messaging.Configuration;
 using M3.Desafio.Inscricoes.Telemetria;
+using Microsoft.Extensions.Options;
+using Google.Protobuf.WellKnownTypes;
+using Asp.Versioning.ApiExplorer;
 
 namespace M3.Desafio.Inscricoes.API.Infrastructure;
 
@@ -21,9 +24,10 @@ internal static class ServicesExtensions
 {
     public static IServiceCollection AddSwaggerDoc(this IServiceCollection services)
     {
+        services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
         {
-            c.CustomSchemaIds(x => x.ToString());
+            c.CustomSchemaIds(x => x.FullName); // Evita conflitos de nomes de schema
             c.AddSecurityDefinition(
                 "Bearer",
                 new OpenApiSecurityScheme
@@ -53,15 +57,17 @@ internal static class ServicesExtensions
                 }
             );
 
-            c.SwaggerDoc(
-                "v1",
-                new OpenApiInfo
+            // Gera um documento Swagger para cada versão da API
+            var provider = services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
+
+            foreach (var description in provider.ApiVersionDescriptions)
+            {
+                c.SwaggerDoc(description.GroupName, new OpenApiInfo()
                 {
-                    Title = "Cdc Consumer",
-                    Description = "Consumer consolidator worker.",
-                    Version = "v1"
-                }
-            );
+                    Title = $"Minha API {description.ApiVersion}",
+                    Version = description.ApiVersion.ToString()
+                });
+            }
         });
         return services;
     }
@@ -70,9 +76,13 @@ internal static class ServicesExtensions
     {
         services.AddApiVersioning(config =>
         {
-            config.DefaultApiVersion = new ApiVersion(1, 0);
-            config.AssumeDefaultVersionWhenUnspecified = true;
-            config.ReportApiVersions = true;
+            config.ReportApiVersions = true; // Inclui as versões suportadas no cabeçalho da resposta
+            config.AssumeDefaultVersionWhenUnspecified = true; // Define uma versão padrão se nenhuma for especificada
+            config.DefaultApiVersion = new ApiVersion(1); // Versão padrão
+        }).AddApiExplorer(options =>
+        {
+            options.GroupNameFormat = "'v'V"; // Formato: "v1", "v2", etc.
+            options.SubstituteApiVersionInUrl = true;
         });
         return services;
     }

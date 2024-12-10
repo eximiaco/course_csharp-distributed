@@ -2,7 +2,7 @@
 using M3.Desafio.Inscricoes.Comandos;
 using Microsoft.AspNetCore.Mvc;
 
-namespace M3.Desafio.Inscricoes.API.Controllers;
+namespace M3.Desafio.Inscricoes.API.Controllers.V1;
 
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1")]
@@ -25,6 +25,10 @@ public class InscricoesController : ControllerBase
             return BadRequest(resultado.Error);
         return Ok();
     }
+
+    [HttpGet]
+    public IActionResult GetV1()
+        => Ok(new { version = "1", datetime = DateTime.Now });
 }
 
 public record NovaInscricaoModel(string CpfAluno, string CpfResponsavel, int CodigoTurma);
