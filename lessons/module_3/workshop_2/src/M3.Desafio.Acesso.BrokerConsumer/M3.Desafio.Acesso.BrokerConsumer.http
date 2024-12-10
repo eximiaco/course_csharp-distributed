@@ -1,0 +1,6 @@
+@M3.Desafio.Acesso.BrokerConsumer_HostAddress = http://localhost:5288
+
+GET {{M3.Desafio.Acesso.BrokerConsumer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

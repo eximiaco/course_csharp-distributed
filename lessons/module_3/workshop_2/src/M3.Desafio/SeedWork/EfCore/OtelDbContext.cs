@@ -1,5 +1,8 @@
-﻿using M3.Desafio.Inscricoes;
+﻿using M3.Desafio.Acessos;
+using M3.Desafio.Financeiro;
+using M3.Desafio.Inscricoes;
 using M3.Desafio.SeedWork.EfCore.Mappings;
+using M3.Desafio.SeedWork.ServiceBus;
 using Microsoft.EntityFrameworkCore;
 
 namespace M3.Desafio.SeedWork.EfCore;
@@ -11,12 +14,12 @@ public class OtelDbContext : DbContext
     public OtelDbContext(DbContextOptions<OtelDbContext> options, IServiceBus serviceBus) : base(options)
     {
         _serviceBus = serviceBus ?? throw new ArgumentNullException(nameof(serviceBus));
-
-        System.Diagnostics.Debug.WriteLine("InscricoesDbContext::ctor ->" + GetHashCode());
     }
 
     public DbSet<Inscricao> Inscricoes { get; set; }
     public DbSet<Turma> Turmas { get; set; }
+    public DbSet<Mensalidade> Mensalidades { get; set; }
+    public DbSet<PermissaoAcesso> PermissaoAcessos { get; set; }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
@@ -29,5 +32,7 @@ public class OtelDbContext : DbContext
     {
         modelBuilder.ApplyConfiguration(new InscricoesConfigurations());
         modelBuilder.ApplyConfiguration(new TurmasConfigurations());
+        modelBuilder.ApplyConfiguration(new MensalidadeConfiguration());
+        modelBuilder.ApplyConfiguration(new PermissaoAcessoConfiguration());
     }
 }

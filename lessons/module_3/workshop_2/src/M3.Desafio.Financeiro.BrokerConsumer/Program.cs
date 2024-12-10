@@ -1,6 +1,6 @@
-using Autofac.Extensions.DependencyInjection;
 using Autofac;
-using M3.Desafio.Inscricoes.API.Infrastructure;
+using Autofac.Extensions.DependencyInjection;
+using M3.Desafio.Financeiro.BrokerConsumer.Infrastructure;
 using Serilog;
 using System.Reflection;
 
@@ -13,14 +13,9 @@ try
 {
     Log.ForContext("ApplicationName", serviceName).Information("Starting application");
     builder.Services
-        .AddTelemetry(serviceName!, serviceVersion!, builder.Configuration)
         .AddLogs(builder.Configuration, serviceName!)
-        .AddHttpContextAccessor()
-        .AddSwaggerDoc()
-        .AddVersioning()
-        .AddCustomCors()
-        .AddOptions()
-        .AddTransient<UnitOfWorkMiddleware>()
+        .AddTelemetry(serviceName!, serviceVersion!, builder.Configuration)
+        .AddEndpointsApiExplorer()
         .AddMessageBroker(builder.Configuration)
         .AddCustomMvc();
 
@@ -32,22 +27,8 @@ try
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
     var app = builder.Build();
-
-    // Configure the HTTP request pipeline.
-    if (!app.Environment.IsProduction())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI(options =>
-        {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
-            options.SwaggerEndpoint("/swagger/v2/swagger.json", "API v2");
-        });
-    }
-
-    app.UseHttpsRedirection();
     app.UseAuthentication();
     app.UseAuthorization();
-    app.UseMiddleware<UnitOfWorkMiddleware>();
     app.MapControllers();
     app.Run();
     return 0;

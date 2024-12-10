@@ -4,14 +4,11 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>d2036243-e17b-4bbf-8d55-f706cacdc724</UserSecretsId>
+    <UserSecretsId>ab44116b-8672-4b0e-8c8f-9dcbee30beb4</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
-    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
-    <PackageReference Include="CSharpFunctionalExtensions" Version="3.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.11" />
     <PackageReference Include="OpenTelemetry" Version="1.10.0" />
     <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.10.0" />
