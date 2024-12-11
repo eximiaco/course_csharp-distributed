@@ -1,0 +1,51 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+
+exporters:
+  otlphttp:
+    auth:
+      authenticator: basicauth/otlp
+    endpoint: "https://otlp-gateway-prod-sa-east-0.grafana.net/otlp"
+  otlp:
+    endpoint: "api.honeycomb.io:443"
+    headers:
+      "x-honeycomb-team": ""
+      "x-honeycomb-dataset": "M3.Desafio"
+  loki:
+    endpoint: "h"
+    auth:
+      authenticator: basicauth/logs
+  otlp/signoz:
+    endpoint: ""
+
+processors:
+  batch:
+
+extensions:
+  health_check:
+  basicauth/otlp:
+    client_auth:
+      username: ""
+      password: ""
+  basicauth/logs:
+    client_auth:
+      username: ""
+      password: ""  
+
+service:
+  extensions: [health_check,basicauth/otlp,basicauth/logs]
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlphttp, otlp, otlp/signoz]
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlphttp, otlp, otlp/signoz]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [loki, otlp, otlp/signoz]
